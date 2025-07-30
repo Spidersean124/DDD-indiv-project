@@ -1,0 +1,42 @@
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\bin\Debug\net8.0\Indivproj.exe
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\bin\Debug\net8.0\Indivproj.deps.json
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\bin\Debug\net8.0\Indivproj.runtimeconfig.json
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\bin\Debug\net8.0\Indivproj.dll
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\bin\Debug\net8.0\Indivproj.pdb
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\obj\Debug\net8.0\Indivproj.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\obj\Debug\net8.0\Indivproj.AssemblyInfoInputs.cache
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\obj\Debug\net8.0\Indivproj.AssemblyInfo.cs
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\obj\Debug\net8.0\Indivproj.csproj.CoreCompileInputs.cache
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\obj\Debug\net8.0\Indivproj.dll
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\obj\Debug\net8.0\refint\Indivproj.dll
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\obj\Debug\net8.0\Indivproj.pdb
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\obj\Debug\net8.0\Indivproj.genruntimeconfig.cache
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\arch swap\Indivproj\Indivproj\obj\Debug\net8.0\ref\Indivproj.dll
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.AssemblyInfoInputs.cache
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.AssemblyInfo.cs
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.csproj.CoreCompileInputs.cache
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.dll
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\refint\Indivproj.dll
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.pdb
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Debug\net8.0\Indivproj.exe
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Debug\net8.0\Indivproj.deps.json
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Debug\net8.0\Indivproj.runtimeconfig.json
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Debug\net8.0\Indivproj.dll
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Debug\net8.0\Indivproj.pdb
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.genruntimeconfig.cache
+C:\Users\moder\OneDrive\Documents\School work\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\ref\Indivproj.dll
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Debug\net8.0\Indivproj.exe
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Debug\net8.0\Indivproj.deps.json
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Debug\net8.0\Indivproj.runtimeconfig.json
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Debug\net8.0\Indivproj.dll
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Debug\net8.0\Indivproj.pdb
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.AssemblyInfoInputs.cache
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.AssemblyInfo.cs
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.csproj.CoreCompileInputs.cache
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.dll
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\refint\Indivproj.dll
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.pdb
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\Indivproj.genruntimeconfig.cache
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Debug\net8.0\ref\Indivproj.dll
