@@ -1,0 +1,14 @@
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Release\net8.0\Indivproj.exe
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Release\net8.0\Indivproj.deps.json
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Release\net8.0\Indivproj.runtimeconfig.json
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Release\net8.0\Indivproj.dll
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\bin\Release\net8.0\Indivproj.pdb
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Release\net8.0\Indivproj.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Release\net8.0\Indivproj.AssemblyInfoInputs.cache
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Release\net8.0\Indivproj.AssemblyInfo.cs
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Release\net8.0\Indivproj.csproj.CoreCompileInputs.cache
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Release\net8.0\Indivproj.dll
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Release\net8.0\refint\Indivproj.dll
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Release\net8.0\Indivproj.pdb
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Release\net8.0\Indivproj.genruntimeconfig.cache
+C:\Users\moder\Documents\School\Hull uni\Year 3\Design Develop Deploy (DDD)\Arch rework\Indivproj\obj\Release\net8.0\ref\Indivproj.dll
