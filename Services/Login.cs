@@ -26,7 +26,7 @@ namespace DDDProject.Services
 
             personalSupervisors = new List<PersonalSupervisor>
             {
-                new PersonalSupervisor { PersonalSupervisorID = 201, PersonalSupervisorName = "Paul Ingle" },
+                new PersonalSupervisor { PersonalSupervisorID = 201, PersonalSupervisorName = "Barry Allen" },
                 new PersonalSupervisor { PersonalSupervisorID = 202, PersonalSupervisorName = "Susan Carrol" }
             };
 

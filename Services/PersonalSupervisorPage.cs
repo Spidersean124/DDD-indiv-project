@@ -52,101 +52,70 @@ namespace DDDProject.Services
         // ------------------------------------------------------
         // -------------------- REPORT REVIEW --------------------
         // ------------------------------------------------------
-
-
         public void SupervisorReviewReport(PersonalSupervisor PS)
         {
-            if (PS.AssignedStudents.Count == 0)
+            Console.WriteLine("\nReports for your assigned students:\n");
+
+            if (!File.Exists("reports.txt"))
             {
-                Console.WriteLine("You have no assigned students.");
+                Console.WriteLine("No reports file found.");
                 return;
             }
 
-            Console.WriteLine("\nSelect a student to review their reports:\n");
-            for (int i = 0; i < PS.AssignedStudents.Count; i++)
+            var lines = File.ReadAllLines("reports.txt");
+            bool foundReports = false;
+
+            foreach (var student in PS.AssignedStudents)
             {
-                Console.WriteLine($"{i + 1}. {PS.AssignedStudents[i].StudentName} (ID: {PS.AssignedStudents[i].StudentID})");
-            }
+                Console.WriteLine($"\nReports for {student.StudentName} (ID: {student.StudentID}):");
 
-            Console.Write("\nEnter the number of the student you would like to review: ");
-            if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= PS.AssignedStudents.Count)
-            {
-                Student chosenStudent = PS.AssignedStudents[choice - 1];
-
-                Console.WriteLine($"\nReports for {chosenStudent.StudentName}:\n");
-
-                if (chosenStudent.Reports.Count == 0)
+                foreach (var line in lines)
                 {
-                    Console.WriteLine("No reports submitted yet.");
-                }
-                else
-                {
-                    for (int i = 0; i < chosenStudent.Reports.Count; i++)
+                    var parts = line.Split(',');
+                    if (parts.Length >= 4 && int.Parse(parts[0]) == student.StudentID)
                     {
-                        Console.WriteLine($"{i + 1}. Date: {chosenStudent.Reports[i].SubmissionDate}");
-                    }
-
-                    Console.WriteLine("\nEnter the number of the report you would like to view, or 0 to go back:");
-                    string input = Console.ReadLine();
-
-                    if (int.TryParse(input, out int reportIndex) && reportIndex > 0 && reportIndex <= chosenStudent.Reports.Count)
-                    {
-                        var selectedReport = chosenStudent.Reports[reportIndex - 1];
-                        Console.WriteLine($"\nDate: {selectedReport.SubmissionDate}");
-                        Console.WriteLine($"Contents: {selectedReport.ReportContent}");
+                        Console.WriteLine($"- {parts[2]}: {parts[3]}");
+                        foundReports = true;
                     }
                 }
             }
-            else
+
+            if (!foundReports)
             {
-                Console.WriteLine("Invalid choice.");
+                Console.WriteLine("No reports found for your students.");
             }
         }
 
 
-        private void DisplayReports(Student student)
-        {
-            Console.WriteLine($"\nReports for {student.StudentName}:\n");
 
-            if (student.Reports.Count == 0)
-            {
-                Console.WriteLine("No reports have been submitted yet.");
-                return;
-            }
-
-            foreach (var report in student.Reports)
-            {
-                Console.WriteLine($"Date: {report.SubmissionDate} | Content: {report.ReportContent}");
-            }
-        }
 
         // ------------------------------------------------------
         // -------------------- MEETING MANAGEMENT --------------------
         // ------------------------------------------------------
-
         public void ManageIncomingMeetings(PersonalSupervisor PS)
         {
+            Console.WriteLine("\nIncoming Meeting Requests:\n");
+
             if (!File.Exists("meetings.txt"))
             {
-                Console.WriteLine("No meeting requests found.");
+                Console.WriteLine("No meetings file found.");
                 return;
             }
 
-            var lines = File.ReadAllLines("meetings.txt");
+            var lines = File.ReadAllLines("meetings.txt").ToList();
             bool foundPending = false;
 
-            foreach (var line in lines)
+            for (int i = 0; i < lines.Count; i++)
             {
-                var parts = line.Split(',');
-                if (parts.Length >= 5)
+                var parts = lines[i].Split(',');
+                if (parts.Length >= 5 && parts[1] == PS.AssignedStudents.FirstOrDefault(s => s.StudentID.ToString() == parts[0])?.StudentName)
                 {
-                    int studentId = int.Parse(parts[0]);
                     string studentName = parts[1];
                     DateTime meetingDate = DateTime.Parse(parts[2]);
-                    MeetingStatus status = Enum.Parse<MeetingStatus>(parts[3]);
+                    string status = parts[3];
                     string details = parts[4];
 
-                    if (status == MeetingStatus.Pending)
+                    if (status == "Pending")
                     {
                         foundPending = true;
                         Console.WriteLine($"Meeting request from {studentName} on {meetingDate}");
@@ -157,22 +126,18 @@ namespace DDDProject.Services
 
                         if (choice == "1")
                         {
-                            status = MeetingStatus.Accepted;
-                            Console.WriteLine($"Accepted meeting for {studentName}.");
+                            lines[i] = $"{parts[0]},{parts[1]},{parts[2]},Accepted,{details}";
+                            Console.WriteLine($"Accepted meeting with {studentName}.");
                         }
                         else if (choice == "2")
                         {
-                            status = MeetingStatus.Rejected;
-                            Console.WriteLine($"Rejected meeting for {studentName}.");
+                            lines[i] = $"{parts[0]},{parts[1]},{parts[2]},Rejected,{details}";
+                            Console.WriteLine($"Rejected meeting with {studentName}.");
                         }
                         else
                         {
                             Console.WriteLine("Invalid choice, skipped.");
                         }
-
-                        // update the line
-                        var updatedLine = $"{studentId},{studentName},{meetingDate:dd-MM-yyyy HH:mm},{status},{details}";
-                        line.Replace(line, updatedLine);
                     }
                 }
             }
@@ -181,7 +146,10 @@ namespace DDDProject.Services
             {
                 Console.WriteLine("No pending meeting requests.");
             }
+
+            File.WriteAllLines("meetings.txt", lines);
         }
+
 
 
 
