@@ -68,11 +68,26 @@ namespace DDDProject.Services
                 Console.WriteLine($"{i + 1}. {PS.AssignedStudents[i].StudentName} (ID: {PS.AssignedStudents[i].StudentID})");
             }
 
-            Console.WriteLine("\nEnter the number of the student you would like to review: \n");
+            Console.Write("\nEnter the number of the student you would like to review: ");
             if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= PS.AssignedStudents.Count)
             {
                 Student chosenStudent = PS.AssignedStudents[choice - 1];
-                DisplayReports(chosenStudent);
+
+                if (chosenStudent.Reports.Count == 0)
+                {
+                    Console.WriteLine("No reports submitted yet.");
+                }
+                else
+                {
+                    foreach (var report in chosenStudent.Reports)
+                    {
+                        Console.WriteLine($"- {report.SubmissionDate}: {report.ReportContent}");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice.");
             }
         }
 
@@ -98,7 +113,7 @@ namespace DDDProject.Services
 
         public void ManageIncomingMeetings(PersonalSupervisor PS)
         {
-            Console.WriteLine("Incoming Meeting Requests:");
+            bool foundPending = false;
 
             foreach (var student in PS.AssignedStudents)
             {
@@ -106,31 +121,37 @@ namespace DDDProject.Services
                 {
                     if (meeting.Status == MeetingStatus.Pending)
                     {
+                        foundPending = true;
                         Console.WriteLine($"Meeting request from {student.StudentName} on {meeting.MeetingDateTime}");
                         Console.WriteLine("1. Accept");
                         Console.WriteLine("2. Reject");
-                        string input = Console.ReadLine();
+                        Console.Write("Choose an option: ");
+                        string choice = Console.ReadLine();
 
-                        if (input == "1")
+                        if (choice == "1")
                         {
                             meeting.Status = MeetingStatus.Accepted;
-                            Console.WriteLine($"Meeting with {student.StudentName} scheduled for {meeting.MeetingDateTime}");
+                            Console.WriteLine($"Accepted meeting for {student.StudentName}.");
                         }
-                        else if (input == "2")
+                        else if (choice == "2")
                         {
                             meeting.Status = MeetingStatus.Rejected;
-                            Console.WriteLine($"Meeting with {student.StudentName} has been rejected");
+                            Console.WriteLine($"Rejected meeting for {student.StudentName}.");
                         }
                         else
                         {
-                            Console.WriteLine("Invalid choice, please try again.");
+                            Console.WriteLine("Invalid choice, skipped.");
                         }
-
-                        UpdateMeetingStatus(student, meeting); // Save update
                     }
                 }
             }
+
+            if (!foundPending)
+            {
+                Console.WriteLine("No pending meeting requests.");
+            }
         }
+
 
         private void UpdateMeetingStatus(Student student, Meetings meeting)
         {
