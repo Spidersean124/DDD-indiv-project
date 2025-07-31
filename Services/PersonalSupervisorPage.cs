@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DDDProject.Reports_Meetings;
+using System.IO;
 
 namespace DDDProject.Services
 {
@@ -23,9 +24,9 @@ namespace DDDProject.Services
                 Console.WriteLine("3. Schedule a new meeting with your students.");
                 Console.WriteLine("4. Logout.\n");
 
-                string PersonalSupervisorChoice = Console.ReadLine();
+                string choice = Console.ReadLine();
 
-                switch (PersonalSupervisorChoice)
+                switch (choice)
                 {
                     case "1":
                         SupervisorReviewReport(PS);
@@ -34,19 +35,24 @@ namespace DDDProject.Services
                         ManageIncomingMeetings(PS);
                         break;
                     case "3":
-                        PersonalSupervisorScheduleAMeeting(PS);
+                        ScheduleMeetingForStudent(PS);
                         break;
                     case "4":
                         InitialLoginPage initialLoginPage = new InitialLoginPage();
                         initialLoginPage.LoginPage();
+                        exitPersonalSupervisorPage = true;
                         break;
                     default:
                         Console.WriteLine("That is an invalid option. Please try again.");
-                        PersonalSupervisorDashboard(PS);
                         break;
                 }
             }
         }
+
+        // ------------------------------------------------------
+        // -------------------- REPORT REVIEW --------------------
+        // ------------------------------------------------------
+
 
         public void SupervisorReviewReport(PersonalSupervisor PS)
         {
@@ -59,18 +65,36 @@ namespace DDDProject.Services
             Console.WriteLine("\nSelect a student to review their reports:\n");
             for (int i = 0; i < PS.AssignedStudents.Count; i++)
             {
-                Console.WriteLine($"\n{i + 1}. {PS.AssignedStudents[i].StudentName}. ID number: {PS.AssignedStudents[i].StudentID}.\n");
+                Console.WriteLine($"{i + 1}. {PS.AssignedStudents[i].StudentName} (ID: {PS.AssignedStudents[i].StudentID})");
             }
 
             Console.WriteLine("\nEnter the number of the student you would like to review: \n");
-            int PSStudentReportChoice;
-            if (int.TryParse(Console.ReadLine(), out PSStudentReportChoice) && PSStudentReportChoice > 0 && PSStudentReportChoice <= PS.AssignedStudents.Count)
+            if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= PS.AssignedStudents.Count)
             {
-                Student chosenStudent = PS.AssignedStudents[PSStudentReportChoice - 1];
+                Student chosenStudent = PS.AssignedStudents[choice - 1];
                 DisplayReports(chosenStudent);
-
             }
         }
+
+        private void DisplayReports(Student student)
+        {
+            Console.WriteLine($"\nReports for {student.StudentName}:\n");
+
+            if (student.Reports.Count == 0)
+            {
+                Console.WriteLine("No reports have been submitted yet.");
+                return;
+            }
+
+            foreach (var report in student.Reports)
+            {
+                Console.WriteLine($"Date: {report.SubmissionDate} | Content: {report.ReportContent}");
+            }
+        }
+
+        // ------------------------------------------------------
+        // -------------------- MEETING MANAGEMENT --------------------
+        // ------------------------------------------------------
 
         public void ManageIncomingMeetings(PersonalSupervisor PS)
         {
@@ -82,33 +106,56 @@ namespace DDDProject.Services
                 {
                     if (meeting.Status == MeetingStatus.Pending)
                     {
-                        Console.WriteLine($"Meeting request from {student.StudentName}");
+                        Console.WriteLine($"Meeting request from {student.StudentName} on {meeting.MeetingDateTime}");
                         Console.WriteLine("1. Accept");
                         Console.WriteLine("2. Reject");
-                        Console.WriteLine("Choose an option by selecting a number: ");
-                        string Meetingchoice = Console.ReadLine();
+                        string input = Console.ReadLine();
 
-                        if (Meetingchoice == "1")
+                        if (input == "1")
                         {
                             meeting.Status = MeetingStatus.Accepted;
                             Console.WriteLine($"Meeting with {student.StudentName} scheduled for {meeting.MeetingDateTime}");
-
                         }
-                        else if (Meetingchoice == "2")
+                        else if (input == "2")
                         {
                             meeting.Status = MeetingStatus.Rejected;
                             Console.WriteLine($"Meeting with {student.StudentName} has been rejected");
                         }
                         else
                         {
-                            Console.WriteLine("Invalid choice, please try again");
+                            Console.WriteLine("Invalid choice, please try again.");
                         }
+
+                        UpdateMeetingStatus(student, meeting); // Save update
                     }
                 }
             }
         }
 
-        public void PersonalSupervisorScheduleAMeeting(PersonalSupervisor PS)
+        private void UpdateMeetingStatus(Student student, Meetings meeting)
+        {
+            if (!File.Exists("meetings.txt")) return;
+
+            var lines = File.ReadAllLines("meetings.txt").ToList();
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                var parts = lines[i].Split(',');
+                if (parts.Length >= 5 && int.Parse(parts[0]) == student.StudentID &&
+                    DateTime.Parse(parts[2]) == meeting.MeetingDateTime)
+                {
+                    lines[i] = $"{parts[0]},{parts[1]},{parts[2]},{meeting.Status},{meeting.MeetingDetails}";
+                }
+            }
+
+            File.WriteAllLines("meetings.txt", lines);
+        }
+
+        // ------------------------------------------------------
+        // -------------------- SCHEDULE MEETING --------------------
+        // ------------------------------------------------------
+
+        public void ScheduleMeetingForStudent(PersonalSupervisor PS)
         {
             Console.WriteLine("Choose a student to schedule a meeting with:");
 
@@ -118,34 +165,51 @@ namespace DDDProject.Services
             }
 
             Console.WriteLine("Enter the number of the student you want to schedule a meeting with:");
-            int studentChoice = int.Parse(Console.ReadLine());
-
-            if (studentChoice > 0 && studentChoice <= PS.AssignedStudents.Count)
+            if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= PS.AssignedStudents.Count)
             {
-                var student = PS.AssignedStudents[studentChoice - 1];
+                var student = PS.AssignedStudents[choice - 1];
                 Console.WriteLine($"Scheduling a meeting with {student.StudentName}.");
 
-                Console.WriteLine("\nPlease enter the date that best suits you for the meeting in this format: 01-01-2024.\n");
-                DateTime meetingDate = DateTime.Parse(Console.ReadLine());
+                Console.WriteLine("Enter date (DD-MM-YYYY, be sure to separate numbers with dashes):");
+                string dateInput = Console.ReadLine();
+
+                Console.WriteLine("Enter time (HH:MM in 24-hour format, be sure to use a colon):");
+                string timeInput = Console.ReadLine();
+
+                bool validDate = DateTime.TryParseExact(dateInput, "dd-MM-yyyy",
+                    System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime date);
+
+                bool validTime = TimeSpan.TryParseExact(timeInput, "hh\\:mm",
+                    System.Globalization.CultureInfo.InvariantCulture, out TimeSpan time);
+
+                if (validDate && validTime)
+                {
+                    DateTime dateTime = date.Date + time;
+
+                    Meetings newMeeting = new Meetings
+                    {
+                        MeetingDateTime = dateTime,
+                        Status = MeetingStatus.Accepted,
+                        MeetingDetails = $"Meeting scheduled by Supervisor {PS.PersonalSupervisorName}"
+                    };
+
+                    student.Meetings.Add(newMeeting);
+
+                    using (StreamWriter sw = File.AppendText("meetings.txt"))
+                    {
+                        sw.WriteLine($"{student.StudentID},{student.StudentName},{newMeeting.MeetingDateTime:dd-MM-yyyy HH:mm},{newMeeting.Status},{newMeeting.MeetingDetails}");
+                    }
+
+                    Console.WriteLine($"Meeting scheduled for {dateTime:dd-MM-yyyy HH:mm}.");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid date or time format. Please use DD-MM-YYYY and HH:MM (24-hour).");
+                }
             }
         }
 
-        private void DisplayReports(Student student)
-        {
-            Console.WriteLine($"\n Reports for {student.StudentName}: \n");
-
-            if (student.Reports.Count == 0)
-            {
-                Console.WriteLine("No reports have been submitted yet.");
-                return;
-            }
-
-            for (int i = 0; i < student.Reports.Count; i++)
-            {
-                var StudentReport = student.Reports[i];
-                Console.WriteLine($"{i + 1}. Date of submission: {student.Reports[i].SubmissionDate}");
-
-            }
-        }
     }
+    // ------------------------------------------------------
 }
+

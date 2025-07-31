@@ -34,10 +34,10 @@ namespace DDDProject.Services
 
             students = new List<Student>
             {
-                new Student { StudentID = 101, StudentName = "Archie Forde" },
+                new Student { StudentID = 101, StudentName = "Patrick Parker" },
                 new Student { StudentID = 103, StudentName = "Charlie Baron" },
                 new Student { StudentID = 102, StudentName = "Sean Cooney" },
-                new Student { StudentID = 104, StudentName = "Maddy Sharpe" }
+                new Student { StudentID = 104, StudentName = "Maddy Hall" }
             };
 
             personalSupervisors[0].AssignStudents(new List<Student> { students[0], students[1] });

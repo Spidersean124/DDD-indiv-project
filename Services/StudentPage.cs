@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.Design;
+using System.Globalization;
 using DDDProject.Reports_Meetings;
 using DDDProject.DataSaving;
+using System.IO;
 
 namespace DDDProject.Services
 {
@@ -14,6 +16,11 @@ namespace DDDProject.Services
     {
         public void StudentDashboard(Student student)
         {
+            // -------------------- LOAD REPORTS & MEETINGS --------------------
+            LoadReports(student);
+            LoadMeetings(student);
+            // ----------------------------------------------------------------
+
             if (IsReportDueForWeek(student))
             {
                 Console.WriteLine("\n A reminder to submit your report for this week as it is overdue.\n");
@@ -46,10 +53,10 @@ namespace DDDProject.Services
                     case "4":
                         InitialLoginPage initialLoginPage = new InitialLoginPage();
                         initialLoginPage.LoginPage();
+                        exitStudentPage = true;
                         break;
                     default:
                         Console.WriteLine("That is an invalid option. Please try again.");
-                        StudentDashboard(student);
                         break;
                 }
             }
@@ -66,7 +73,38 @@ namespace DDDProject.Services
             return (DateTime.Now - lastReportDate).TotalDays > 7;
         }
 
-        private static void SubmitWeeklyReport(Student student)
+        // -------------------------------------------------------------
+        // -------------------- REPORTS PERSISTENCE --------------------
+        // -------------------------------------------------------------
+        
+        private void SaveReport(Student student, Report report)
+        {
+            using (StreamWriter sw = File.AppendText("reports.txt"))
+            {
+                sw.WriteLine($"{student.StudentID},{student.StudentName},{report.SubmissionDate},{report.ReportContent}");
+            }
+        }
+
+        private void LoadReports(Student student)
+        {
+            if (!File.Exists("reports.txt")) return;
+
+            foreach (var line in File.ReadAllLines("reports.txt"))
+            {
+                var parts = line.Split(',');
+                if (parts.Length >= 4 && int.Parse(parts[0]) == student.StudentID)
+                {
+                    student.Reports.Add(new Report
+                    {
+                        SubmissionDate = DateTime.Parse(parts[2]),
+                        ReportContent = parts[3]
+                    });
+                }
+            }
+        }
+        // -------------------------------------------------------------
+
+        private void SubmitWeeklyReport(Student student)
         {
             Console.WriteLine("\nPlease write up your weekly report below about your progress and your feelings.\n");
             string reportContent = Console.ReadLine();
@@ -78,6 +116,8 @@ namespace DDDProject.Services
             };
 
             student.Reports.Add(newReport);
+            SaveReport(student, newReport); // Persist report
+
             Console.WriteLine($"\nYour weekly report has been submitted and saved successfully at: {newReport.SubmissionDate}\n");
         }
 
@@ -105,7 +145,6 @@ namespace DDDProject.Services
                     Console.WriteLine("\n Selected Report:\n");
                     Console.WriteLine($"Date of submission: {selectedReport.SubmissionDate}");
                     Console.WriteLine($"Report contents: {selectedReport.ReportContent}");
-
                 }
                 else if (reportIndex == 0)
                 {
@@ -118,22 +157,64 @@ namespace DDDProject.Services
             }
         }
 
+
+        // -------------------------------------------------------------
+        // -------------------- MEETINGS PERSISTENCE --------------------
+        // -------------------------------------------------------------
+        
+
+        private void SaveMeeting(Student student, Meetings meeting)
+        {
+            using (StreamWriter sw = File.AppendText("meetings.txt"))
+            {
+                sw.WriteLine($"{student.StudentID},{student.StudentName},{meeting.MeetingDateTime},{meeting.Status},{meeting.MeetingDetails}");
+            }
+        }
+
+        private void LoadMeetings(Student student)
+        {
+            if (!File.Exists("meetings.txt")) return;
+
+            foreach (var line in File.ReadAllLines("meetings.txt"))
+            {
+                var parts = line.Split(',');
+                if (parts.Length >= 5 && int.Parse(parts[0]) == student.StudentID)
+                {
+                    student.Meetings.Add(new Meetings
+                    {
+                        MeetingDateTime = DateTime.Parse(parts[2]),
+                        Status = Enum.Parse<MeetingStatus>(parts[3]),
+                        MeetingDetails = parts[4]
+                    });
+                }
+            }
+        }
+        // -------------------------------------------------------------
+
         public void ScheduleMeetingWithPS(Student student)
         {
-            Console.WriteLine($"\nWould you like to schedule a meeting with your Personal Supervisor {student.StudentName}? (Yes/No)\n");
+            Console.WriteLine($"\nWould you like to schedule a meeting with your Personal Supervisor {student.AssignedPS.PersonalSupervisorName}? (Yes/No)\n");
             string input = Console.ReadLine();
 
             if (input?.ToLower() == "yes")
             {
-                Console.WriteLine("\nPlease enter the date that best suits you for the meeting in this format: DD-MM-YYYY.\n");
+                Console.WriteLine("\nPlease enter the date (DD-MM-YYYY, be sure to separate numbers with dashes):\n");
                 string dateInput = Console.ReadLine();
 
-                Console.WriteLine("\nPlease enter the time that also best suits you for the meeting in A 24 hour format: HH:MM\n");
+                Console.WriteLine("\nPlease enter the time (HH:MM in 24-hour format, be sure to use a colon):\n");
                 string timeInput = Console.ReadLine();
 
-                if (DateTime.TryParse(dateInput, out DateTime date) && TimeSpan.TryParse(timeInput, out TimeSpan time))
+                DateTime dateTime;
+                bool validDate = DateTime.TryParseExact(dateInput, "dd-MM-yyyy",
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date);
+
+                bool validTime = TimeSpan.TryParseExact(timeInput, "hh\\:mm",
+                    CultureInfo.InvariantCulture, out TimeSpan time);
+
+                if (validDate && validTime)
                 {
-                    DateTime dateTime = date.Date + time;
+                    dateTime = date.Date + time;
+
                     Meetings newMeeting = new Meetings
                     {
                         MeetingDateTime = dateTime,
@@ -142,11 +223,13 @@ namespace DDDProject.Services
                     };
 
                     student.Meetings.Add(newMeeting);
-                    Console.WriteLine($"Meeting requested for {dateTime}. Awaiting Supervisor approval.\n");
+                    SaveMeeting(student, newMeeting);
+
+                    Console.WriteLine($"Meeting requested for {dateTime:dd-MM-yyyy HH:mm}. Awaiting Supervisor approval.\n");
                 }
                 else
                 {
-                    Console.WriteLine("Invalid date format. Please try again.");
+                    Console.WriteLine("Invalid date or time format. Please use DD-MM-YYYY and HH:MM (24-hour).");
                 }
             }
             else
