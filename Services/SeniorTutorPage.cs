@@ -79,27 +79,42 @@ namespace DDDProject.Services
 
         private void CheckRecentReports(SeniorTutor ST)
         {
-            Console.WriteLine("\nRecent Student Reports :\n");
+            Console.WriteLine("\nStudent Reports from File:\n");
 
-            foreach (var supervisor in ST.AssignedPersonalSupervisors)
+            if (!File.Exists("reports.txt"))
             {
-                foreach (var student in supervisor.AssignedStudents)
-                {
-                    var recentReport = student.Reports
-                        .OrderByDescending(r => r.SubmissionDate)
-                        .FirstOrDefault();
+                Console.WriteLine("No reports file found.");
+                return;
+            }
 
-                    if (recentReport != null && (DateTime.Now - recentReport.SubmissionDate).TotalDays <= 7)
-                    {
-                        Console.WriteLine($"{student.StudentName} ({student.StudentID}) submitted on {recentReport.SubmissionDate:dd-MM-yyyy}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{student.StudentName} ({student.StudentID}) has no recent report.");
-                    }
+            var lines = File.ReadAllLines("reports.txt");
+
+            if (lines.Length == 0)
+            {
+                Console.WriteLine("No reports available.");
+                return;
+            }
+
+            foreach (var line in lines)
+            {
+                var parts = line.Split(',');
+                if (parts.Length >= 4)
+                {
+                    string studentID = parts[0];
+                    string studentName = parts[1];
+                    string submissionDate = parts[2];
+                    string reportContent = parts[3];
+
+                    Console.WriteLine($"Student: {studentName} (ID: {studentID})");
+                    Console.WriteLine($"Date Submitted: {submissionDate}");
+                    Console.WriteLine($"Report Content: {reportContent}");
+                    Console.WriteLine("---------------------------------------------------");
                 }
             }
-            Console.WriteLine();
         }
+
+
+
+
     }
 }
